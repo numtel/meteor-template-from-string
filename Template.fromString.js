@@ -2,6 +2,9 @@
 // MIT License, ben@latenightsketches.com
 
 Template.fromString = function(str){
+  var templateTagOpen = str.match(/<template name="([^"]+)">/g);
+  str = str.replace(templateTagOpen], '');
+  str = str.replace('</template>', '');
   var spacebarsStr = SpacebarsCompiler.compile(str, { isTemplate: true });
   var spacebarsFun = Function(extractFuncBody(spacebarsStr));
   return new Blaze.Template(spacebarsFun);
